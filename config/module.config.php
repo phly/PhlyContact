@@ -95,13 +95,6 @@ $config = array('di' => array(
         ),
     )),
     'instance' => array(
-        // Default preferences are sane defaults; they utilize features that
-        // do not need API keys or other configuration in most cases.
-        'preferences' => array(
-            'Zend\Captcha\Adapter' => 'Zend\Captcha\Dumb',
-            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Sendmail',
-        ),
-
         // Defaults for mail message... these will clue the end-user in that
         // they need to override in app configuration.
         'Zend\Mail\Message' => array('parameters' => array(
@@ -127,15 +120,17 @@ $config = array('di' => array(
         )),
 
         // Injection points for the controller
+        // Use the Sendmail mail transport by default
         'PhlyContact\Controller\ContactController' => array('parameters' => array(
             'message'   => 'Zend\Mail\Message',
-            'transport' => 'Zend\Mail\Transport',
+            'transport' => 'Zend\Mail\Transport\Sendmail',
             'form'      => 'PhlyContact\Form\ContactForm',
         )),
 
         // Injection points for the form
+        // Use the "Dumb" CAPTCHA adapter by default
         'PhlyContact\Form\ContactForm' => array('parameters' => array(
-            'captchaAdapter' => 'Zend\Captcha\Adapter',
+            'captchaAdapter' => 'Zend\Captcha\Dumb',
         )),
 
         // If using a ReCaptcha, define these

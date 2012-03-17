@@ -58,8 +58,7 @@ class ContactController extends ActionController
     {
         $headers = $this->request->headers();
         if (!$headers->has('Referer')
-            || !preg_match('#/contact$#',
-                  $headers->get('Referer')->getFieldValue())
+            || !preg_match('#/contact$#', $headers->get('Referer')->getFieldValue())
         ) {
             return $this->redirect()->toRoute('contact');
         }
