@@ -1,8 +1,8 @@
 <?php
 
-namespace Contact\Controller;
+namespace PhlyContact\Controller;
 
-use Contact\Form\ContactForm,
+use PhlyContact\Form\ContactForm,
     Zend\Mail\Transport,
     Zend\Mail\Message as Message,
     Zend\Mvc\Controller\ActionController,
@@ -26,17 +26,17 @@ class ContactController extends ActionController
 
     public function indexAction()
     {
-        $model = new ViewModel(array('form' => $this->form));
-        $model->setTemplate('contact/index');
-        return $model;
+        return array(
+            'form' => $this->form,
+        );
     }
 
     public function processAction()
     {
         if (!$this->request->isPost()) {
-            $this->response->setStatusCode(302);
-            $this->response->headers()->addHeaderLine('Location', '/contact');
+            return $this->redirect()->toRoute('contact');
         }
+
         $post = $this->request->post()->toArray();
         $form = $this->form;
         if (!$form->isValid($post)) {
@@ -51,14 +51,20 @@ class ContactController extends ActionController
         // send email...
         $this->sendEmail($form->getValues());
 
-        return $this->redirect()->toRoute('contact-thank-you');
+        return $this->redirect()->toRoute('contact/thank-you');
     }
 
     public function thankYouAction()
     {
-        $model = new ViewModel();
-        $model->setTemplate('contact/thank-you');
-        return $model;
+        $headers = $this->request->headers();
+        if (!$headers->has('Referer')
+            || !preg_match('#/contact$#',
+                  $headers->get('Referer')->getFieldValue())
+        ) {
+            return $this->redirect()->toRoute('contact');
+        }
+
+        return array();
     }
 
     public function setContactForm(ContactForm $form)

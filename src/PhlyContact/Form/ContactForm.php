@@ -1,23 +1,23 @@
 <?php
-namespace Contact\Form;
+namespace PhlyContact\Form;
 
-use Zend\Captcha\ReCaptcha,
+use Zend\Captcha\Adapter as CaptchaAdapter,
     Zend\Form\Form,
     Zend\Validator\Hostname as HostnameValidator;
 
 class ContactForm extends Form
 {
-    protected $recaptcha;
+    protected $captchaAdapter;
 
-    public function __construct($options = null)
+    public function __construct($captchaAdapter = null)
     {
-        if ($options instanceof ReCaptcha) {
-            $this->setReCaptchaAdapter($options);
+        if ($captchaAdapter instanceof CaptchaAdapter) {
+            $this->setCaptchaAdapter($captchaAdapter);
             parent::__construct(null);
             return;
         };
 
-        parent::__construct($options);
+        parent::__construct($captchaAdapter);
     }
 
     public function init()
@@ -58,7 +58,7 @@ class ContactForm extends Form
         $this->addElement('captcha', 'captcha', array(
             'label'          => 'Please verify you are human.',
             'required'       => true,
-            'captcha'        => $this->recaptcha,
+            'captcha'        => $this->captchaAdapter,
         ));
 
         $this->addElement('hash', 'csrf', array(
@@ -73,8 +73,8 @@ class ContactForm extends Form
         ));
     }
 
-    public function setReCaptchaAdapter(ReCaptcha $recaptcha)
+    protected function setCaptchaAdapter(CaptchaAdapter $adapter)
     {
-        $this->recaptcha = $recaptcha;
+        $this->captchaAdapter = $adapter;
     }
 }

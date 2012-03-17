@@ -1,23 +1,40 @@
 <?php
-$config = array(
-'di' => array(
+$config = array('di' => array(
     'definition' => array('class' => array(
-        'Contact\Controller\ContactController' => array(
+        'PhlyContact\Controller\ContactController' => array(
             'setContactForm' => array(
+                'required' => true,
                 'form' => array(
                     'required' => true,
-                    'type'     => 'Contact\Form\ContactForm',
+                    'type'     => 'PhlyContact\Form\ContactForm',
                 ),
             ),
-        ),
-        'Contact\Form\ContactForm' => array(
-            '__construct' => array(
-                'options' => array(
+            'setMessage' => array(
+                'required' => true,
+                'message' => array(
                     'required' => true,
-                    'type'     => 'Zend\Captcha\ReCaptcha',
+                    'type'     => 'Zend\Mail\Message',
+                ),
+            ),
+            'setMailTransport' => array(
+                'required' => true,
+                'transport' => array(
+                    'required' => true,
+                    'type'     => 'Zend\Mail\Transport',
                 ),
             ),
         ),
+        'PhlyContact\Form\ContactForm' => array(
+            '__construct' => array(
+                'required' => true,
+                'captchaAdapter' => array(
+                    'required' => true,
+                    'type'     => 'Zend\Captcha\Adapter',
+                ),
+            ),
+        ),
+        // The following is provided in order to simplify configuration of a
+        // ReCaptcha adapter.
         'Zend\Captcha\ReCaptcha' => array(
             'setPrivkey' => array(
                 'privkey' => array(
@@ -42,6 +59,8 @@ $config = array(
                 ),
             ),
         ),
+        // The following is provided in order to allow injection of a To: 
+        // address, From: address, and sender.
         'Zend\Mail\Message' => array(
             'addTo' => array(
                 'emailOrAddressList' => array(
@@ -76,75 +95,91 @@ $config = array(
         ),
     )),
     'instance' => array(
+        // Default preferences are sane defaults; they utilize features that
+        // do not need API keys or other configuration in most cases.
+        'preferences' => array(
+            'Zend\Captcha\Adapter' => 'Zend\Captcha\Dumb',
+            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Sendmail',
+        ),
+
+        // Defaults for mail message... these will clue the end-user in that
+        // they need to override in app configuration.
         'Zend\Mail\Message' => array('parameters' => array(
             'Zend\Mail\Message::addTo:emailOrAddressList' => 'EMAIL HERE',
             'Zend\Mail\Message::addTo:name'  => "NAME HERE",
+            'Zend\Mail\Message::setSender:emailOrAddressList' => 'EMAIL HERE',
+            'Zend\Mail\Message::setSender:name'  => "NAME HERE",
         )),
 
+        // Template map for the two templates we provide for the PhpRenderer
         'Zend\View\Resolver\TemplateMapResolver' => array('parameters' => array(
             'map' => array(
-                'contact/index'     => __DIR__ . '/../view/contact/index.phtml',
-                'contact/thank-you' => __DIR__ . '/../view/contact/thank-you.phtml',
+                'contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',
+                'contact/thank-you' => __DIR__ . '/../view/phly-contact/contact/thank-you.phtml',
             ),
         )),
 
+        // Paths for the TemplatePathStack if used
         'Zend\View\Resolver\TemplatePathStack' => array('parameters' => array(
             'paths' => array(
-                'contact' => __DIR__ . '/../view',
+                'contact' => __DIR__ . '/../view/phly-contact',
             ),
         )),
 
-        'Contact\Controller\ContactController' => array('parameters' => array(
+        // Injection points for the controller
+        'PhlyContact\Controller\ContactController' => array('parameters' => array(
             'message'   => 'Zend\Mail\Message',
-            'form'      => 'Contact\Form\ContactForm',
+            'transport' => 'Zend\Mail\Transport',
+            'form'      => 'PhlyContact\Form\ContactForm',
         )),
 
-        'Contact\Form\ContactForm' => array('parameters' => array(
-            'recaptcha' => 'Zend\Captcha\ReCaptcha',
+        // Injection points for the form
+        'PhlyContact\Form\ContactForm' => array('parameters' => array(
+            'captchaAdapter' => 'Zend\Captcha\Adapter',
         )),
 
+        // If using a ReCaptcha, define these
         'Zend\Captcha\ReCaptcha' => array('parameters' => array(
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
             'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
         )),
         
+        // Routes
         'Zend\Mvc\Router\RouteStack' => array('parameters' => array(                                          
             'routes' => array(
-                'contact-form' => array(
+                'contact' => array(
                     'type' => 'Literal',
                     'options' => array(
                         'route' => '/contact',
                         'defaults' => array(
-                            'controller' => 'Contact\Controller\ContactController',
+                            'controller' => 'PhlyContact\Controller\ContactController',
                             'action'     => 'index',
                         ),
                     ),
-                ),
-
-                'contact-process' => array(
-                    'type' => 'Literal',
-                    'options' => array(
-                        'route' => '/contact/process',
-                        'defaults' => array(
-                            'controller' => 'Contact\Controller\ContactController',
-                            'action'     => 'process',
+                    'may_terminate' => true,
+                    'child_routes' => array(
+                        'process' => array(
+                            'type' => 'Literal',
+                            'options' => array(
+                                'route' => '/process',
+                                'defaults' => array(
+                                    'action' => 'process',
+                                ),
+                            ),
                         ),
-                    ),
-                ),
-
-                'contact-thank-you' => array(
-                    'type' => 'Literal',
-                    'options' => array(
-                        'route' => '/contact/thank-you',
-                        'defaults' => array(
-                            'controller' => 'Contact\Controller\ContactController',
-                            'action'     => 'thank-you',
+                        'thank-you' => array(
+                            'type' => 'Literal',
+                            'options' => array(
+                                'route' => '/thank-you',
+                                'defaults' => array(
+                                    'action' => 'thank-you',
+                                ),
+                            ),
                         ),
                     ),
                 ),
             ),
         )),
     ),
-),
-);
+));
 return $config;
