@@ -10,6 +10,11 @@
  */
 return array('di' => array(
     'instance' => array(
+        'preferences' => array(
+            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Smtp',
+            'Zend\Captcha\Adapter' => 'Zend\Captcha\ReCaptcha',
+        ),
+
         'Zend\Mail\Message' => array('parameters' => array(
             'Zend\Mail\Message::addTo:emailOrAddressList'     => 'contact@your.tld',
             'Zend\Mail\Message::setSender:emailOrAddressList' => 'contact@your.tld',
@@ -31,16 +36,5 @@ return array('di' => array(
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
             'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
         )),
-
-        // This tells the controller to use the SMTP transport
-        'PhlyContact\Controller\ContactController' => array('parameters' => array(
-            'transport' => 'Zend\Mail\Transport\Smtp',
-        )),
-
-        // This tells the form to use the ReCaptcha adapter
-        'PhlyContact\Form\ContactForm' => array('parameters' => array(
-            'captchaAdapter' => 'Zend\Captcha\ReCaptcha',
-        )),
-
     ),
 ));
