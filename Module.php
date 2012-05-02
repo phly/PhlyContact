@@ -50,9 +50,9 @@ class Module implements AutoloaderProvider
 
     public function onRouteFinish($e)
     {
-        $matches = $e->getRouteMatch();
-        $controller = $e->getParam('controller');
-        $namespace = substr($controller, 0, strpos($controller, '\\'));
+        $matches    = $e->getRouteMatch();
+        $controller = $matches->getParam('controller');
+        $namespace  = substr($controller, 0, strpos($controller, '\\'));
         if ($namespace !== __NAMESPACE__) {
             return;
         }

@@ -36,13 +36,6 @@ $config = array('di' => array(
                     'type'     => 'Zend\Captcha\Adapter',
                 ),
             ),
-            'setInputFilter' => array(
-                'required' => true,
-                'inputFilter' => array(
-                    'required' => true,
-                    'type'     => 'PhlyContact\Form\ContactFilter',
-                ),
-            ),
         ),
         'PhlyContact\Form\ContactFilter' => array(
             '__construct' => array(
@@ -116,6 +109,7 @@ $config = array('di' => array(
     )),
     'instance' => array(
         'preferences' => array(
+            'Zend\InputFilter\InputFilterInterface' => 'PhlyContact\Form\ContactFilter',
             'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Sendmail',
             'Zend\Captcha\Adapter' => 'Zend\Captcha\Dumb',
         ),
