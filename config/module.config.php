@@ -152,7 +152,8 @@ $config = array('di' => array(
         )),
 
         'PhlyContact\Form\ContactForm' => array('parameters' => array(
-            'name' => 'contact',
+            'name'        => 'contact',
+            'inputFilter' => 'PhlyContact\Form\ContactFilter',
         )),
 
         // If using a ReCaptcha, define these
