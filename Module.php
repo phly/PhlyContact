@@ -9,7 +9,7 @@ class Module implements AutoloaderProvider
 {
     public function init($manager)
     {
-        $events = $manager->getEvents();
+        $events = $manager->events();
         if (method_exists($events, 'getStaticConnections')) {
             $shared = $events->getStaticConnections();
         } elseif (method_exists($events, 'getSharedCollections')) {
