@@ -17,8 +17,42 @@
 
 <?php 
 $form = $this->form;
-$form->setAction($this->url('contact/process'));
-$form->setMethod('post');
-echo $form->render($this);
+$form->setAttribute('action', $this->url('contact/process'));
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form);
 ?>
+<dl class="zend_form">
+<dt><?php echo $this->formLabel($form->get('from')); ?></dt>
+<dd><?php 
+    echo $this->formInput($form->get('from'));
+    echo $this->formElementErrors($form->get('from'));
+?></dd>
+
+<dt><?php echo $this->formLabel($form->get('subject')); ?></dt>
+<dd><?php 
+    echo $this->formInput($form->get('subject'));
+    echo $this->formElementErrors($form->get('subject'));
+?></dd>
+
+<dt><?php echo $this->formLabel($form->get('body')); ?></dt>
+<dd><?php 
+    echo $this->formTextarea($form->get('body'));
+    echo $this->formElementErrors($form->get('body'));
+?></dd>
+
+<dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
+<dd><?php 
+    $element = $form->get('captcha');
+    $captcha = $element->getAttribute('captcha');
+    echo $captcha->render($this);
+    echo $this->formElementErrors($form->get('captcha'));
+?></dd>
+
+<dd><?php 
+    echo $this->formInput($form->get('Send'));
+    echo $this->formElementErrors($form->get('Send'));
+?></dd>
+
+</dl>
 </section>
