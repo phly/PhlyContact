@@ -27,6 +27,26 @@ $config = array('di' => array(
         'PhlyContact\Form\ContactForm' => array(
             '__construct' => array(
                 'required' => true,
+                'name' => array(
+                    'required' => false,
+                    'type'     => false,
+                ),
+                'captchaAdapter' => array(
+                    'required' => true,
+                    'type'     => 'Zend\Captcha\Adapter',
+                ),
+            ),
+            'setInputFilter' => array(
+                'required' => true,
+                'inputFilter' => array(
+                    'required' => true,
+                    'type'     => 'PhlyContact\Form\ContactFilter',
+                ),
+            ),
+        ),
+        'PhlyContact\Form\ContactFilter' => array(
+            '__construct' => array(
+                'required' => true,
                 'captchaAdapter' => array(
                     'required' => true,
                     'type'     => 'Zend\Captcha\Adapter',

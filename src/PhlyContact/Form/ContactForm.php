@@ -1,80 +1,85 @@
 <?php
 namespace PhlyContact\Form;
 
-use Zend\Captcha\Adapter as CaptchaAdapter,
-    Zend\Form\Form,
-    Zend\Validator\Hostname as HostnameValidator;
+use Zend\Captcha\Adapter as CaptchaAdapter;
+use Zend\Form\Factory as FormFactory;
+use Zend\Form\Form;
 
 class ContactForm extends Form
 {
     protected $captchaAdapter;
+    protected $csrfToken;
 
-    public function __construct($captchaAdapter = null)
+    public function __construct($name = null, CaptchaAdapter $captchaAdapter = null, $csrfToken = null)
     {
-        if ($captchaAdapter instanceof CaptchaAdapter) {
-            $this->setCaptchaAdapter($captchaAdapter);
-            parent::__construct(null);
-            return;
-        };
+        parent::__construct($name);
 
-        parent::__construct($captchaAdapter);
+        if (null !== $captchaAdapter) {
+            $this->captchaAdapter = $captchaAdapter;
+        }
+        $this->csrfToken = $csrfToken;
+
+        $this->init();
     }
 
     public function init()
     {
-        $this->setName('contact');
+        $factory = new FormFactory();
+        $name = $this->getName();
+        if (null === $name) {
+            $this->setName('contact');
+        }
         
-        $this->addElement('text', 'from', array(
-            'label'     => 'From:',
-            'required'  => true,
-            'validators' => array(
-                array('EmailAddress', true, array(
-                    'allow'  => HostnameValidator::ALLOW_DNS,
-                    'domain' => true,
-                )),
+        $this->add($factory->createElement(array(
+            'name' => 'from',
+            'attributes' => array(
+                'label' => 'From:',
+                'type'  => 'text',
             ),
-        ));
+        )));
 
-        $this->addElement('text', 'subject', array(
-            'label'      => 'Subject:',
-            'required'   => true,
-            'filters'    => array(
-                'StripTags',
+        $this->add($factory->createElement(array(
+            'name'  => 'subject',
+            'attributes' => array(
+                'label' => 'Subject:',
+                'type'  => 'text',
             ),
-            'validators' => array(
-                array('StringLength', true, array(
-                    'encoding' => 'UTF-8',
-                    'min'      => 2,
-                    'max'      => 140,
-                )),
+        )));
+
+
+        $this->add($factory->createElement(array(
+            'name'  => 'body',
+            'attributes' => array(
+                'label' => 'Your message:',
+                'type'  => 'textarea',
             ),
-        ));
+        )));
 
-        $this->addElement('textarea', 'body', array(
-            'label'    => 'Your message:',
-            'required' => true,
-        ));
+        $this->add($factory->createElement(array(
+            'name' => 'captcha',
+            'attributes' => array(
+                'label'   => 'Please verify you are human.',
+                'captcha' => $this->captchaAdapter,
+            ),
+        )));
 
-        $this->addElement('captcha', 'captcha', array(
-            'label'          => 'Please verify you are human.',
-            'required'       => true,
-            'captcha'        => $this->captchaAdapter,
-        ));
+        /*
+         * Omitting until we have a CSRF validator
+        $this->add($factory->createElement(array(
+            'name' => 'csrf',
+            'attributes' => array(
+                'type'  => 'hidden',
+                'value' => $this->csrfToken,
+            ),
+        )));
+         */
 
-        $this->addElement('hash', 'csrf', array(
-            'ignore'   => true,
-            'required' => true,
-        ));
-
-        $this->addElement('submit', 'Send', array(
-            'label'    => 'Send',
-            'required' => false,
-            'ignore'   => true,
-        ));
-    }
-
-    protected function setCaptchaAdapter(CaptchaAdapter $adapter)
-    {
-        $this->captchaAdapter = $adapter;
+        $this->add($factory->createElement(array(
+            'name' => 'Send',
+            'attributes' => array(
+                'type'  => 'submit',
+                'value' => 'Send',
+            ),
+        )));
     }
 }
