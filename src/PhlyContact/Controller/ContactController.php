@@ -37,9 +37,10 @@ class ContactController extends ActionController
             return $this->redirect()->toRoute('contact');
         }
 
-        $post = $this->request->post()->toArray();
+        $post = $this->request->post();
         $form = $this->form;
-        if (!$form->isValid($post)) {
+        $form->setData($post);
+        if (!$form->isValid()) {
             $model = new ViewModel(array(
                 'error' => true,
                 'form'  => $form,
@@ -49,7 +50,7 @@ class ContactController extends ActionController
         }
 
         // send email...
-        $this->sendEmail($form->getValues());
+        $this->sendEmail($form->getData());
 
         return $this->redirect()->toRoute('contact/thank-you');
     }

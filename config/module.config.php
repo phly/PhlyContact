@@ -151,6 +151,10 @@ $config = array('di' => array(
             'form'      => 'PhlyContact\Form\ContactForm',
         )),
 
+        'PhlyContact\Form\ContactForm' => array('parameters' => array(
+            'name' => 'contact',
+        )),
+
         // If using a ReCaptcha, define these
         'Zend\Captcha\ReCaptcha' => array('parameters' => array(
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
