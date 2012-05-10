@@ -43,13 +43,12 @@ echo $this->form()->openTag($form);
 
 <dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
 <dd><?php 
-    $element = $form->get('captcha');
-    $captcha = $element->getAttribute('captcha');
-    echo $captcha->render($this);
+    echo $this->formCaptcha($form->get('captcha'));
     echo $this->formElementErrors($form->get('captcha'));
 ?></dd>
 
 <dd><?php 
+    echo $this->formElement($form->get('csrf'));
     echo $this->formInput($form->get('Send'));
     echo $this->formElementErrors($form->get('Send'));
 ?></dd>
