@@ -19,7 +19,7 @@ class ContactController extends ActionController
         $this->message = $message;
     }
 
-    public function setMailTransport(Transport $transport)
+    public function setMailTransport(Transport\TransportInterface $transport)
     {
         $this->transport = $transport;
     }

@@ -20,7 +20,7 @@ $config = array('di' => array(
                 'required' => true,
                 'transport' => array(
                     'required' => true,
-                    'type'     => 'Zend\Mail\Transport',
+                    'type'     => 'Zend\Mail\Transport\TransportInterface',
                 ),
             ),
         ),
@@ -33,7 +33,14 @@ $config = array('di' => array(
                 ),
                 'captchaAdapter' => array(
                     'required' => true,
-                    'type'     => 'Zend\Captcha\Adapter',
+                    'type'     => 'Zend\Captcha\AdapterInterface',
+                ),
+            ),
+            'setInputFilter' => array(
+                'required' => true,
+                'inputFilter' => array(
+                    'required' => true,
+                    'type'     => 'PhlyContact\Form\ContactFilter',
                 ),
             ),
         ),
@@ -42,7 +49,7 @@ $config = array('di' => array(
                 'required' => true,
                 'captchaAdapter' => array(
                     'required' => true,
-                    'type'     => 'Zend\Captcha\Adapter',
+                    'type'     => 'Zend\Captcha\AdapterInterface',
                 ),
             ),
         ),
@@ -109,9 +116,8 @@ $config = array('di' => array(
     )),
     'instance' => array(
         'preferences' => array(
-            'Zend\InputFilter\InputFilterInterface' => 'PhlyContact\Form\ContactFilter',
-            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Sendmail',
-            'Zend\Captcha\Adapter' => 'Zend\Captcha\Dumb',
+            'Zend\Mail\Transport\TransportInterface'  => 'Zend\Mail\Transport\Sendmail',
+            'Zend\Captcha\AdapterInterface' => 'Zend\Captcha\Dumb',
         ),
 
         // Defaults for mail message... these will clue the end-user in that
@@ -157,7 +163,7 @@ $config = array('di' => array(
         )),
         
         // Routes
-        'Zend\Mvc\Router\RouteStack' => array('parameters' => array(                                          
+        'Zend\Mvc\Router\RouteStackInterface' => array('parameters' => array(                                          
             'routes' => array(
                 'contact' => array(
                     'type' => 'Literal',

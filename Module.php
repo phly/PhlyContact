@@ -14,6 +14,8 @@ class Module implements AutoloaderProvider
             $shared = $events->getStaticConnections();
         } elseif (method_exists($events, 'getSharedCollections')) {
             $shared = $events->getSharedCollections();
+        } elseif (method_exists($events, 'getSharedManager')) {
+            $shared = $events->getSharedManager();
         } else {
             return;
         }

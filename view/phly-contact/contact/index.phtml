@@ -17,6 +17,7 @@
 
 <?php 
 $form = $this->form;
+$form->prepare();
 $form->setAttribute('action', $this->url('contact/process'));
 $form->setAttribute('method', 'post');
 

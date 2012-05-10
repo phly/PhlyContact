@@ -1,7 +1,7 @@
 <?php
 namespace PhlyContact\Form;
 
-use Zend\Captcha\Adapter as CaptchaAdapter;
+use Zend\Captcha\AdapterInterface as CaptchaAdapter;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
@@ -60,12 +60,12 @@ class ContactForm extends Form
 
         $this->add(new Element\Csrf('csrf'));
 
-        $this->add($factory->createElement(array(
+        $this->add(array(
             'name' => 'Send',
             'attributes' => array(
                 'type'  => 'submit',
                 'value' => 'Send',
             ),
-        )));
+        ));
     }
 }
