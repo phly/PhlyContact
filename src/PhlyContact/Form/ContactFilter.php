@@ -2,25 +2,13 @@
 namespace PhlyContact\Form;
 
 use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
 use Zend\Validator\Hostname as HostnameValidator;
 
 class ContactFilter extends InputFilter
 {
-    public function __construct($captchaAdapter = null)
+    public function __construct()
     {
-        $factory = new InputFactory();
-
-        if ($captchaAdapter instanceof CaptchaAdapter) {
-            $captcha = $factory->createInput(array(
-                'name' => 'captcha',
-                'required' => true,
-                'validators' => array($captchaAdapter),
-            ));
-            $this->add($captcha);
-        };
-
-        $this->add($factory->createInput(array(
+        $this->add(array(
             'name'       => 'from',
             'required'   => true,
             'validators' => array(
@@ -32,9 +20,9 @@ class ContactFilter extends InputFilter
                     ),
                 ),
             ),
-        )));
+        ));
 
-        $this->add($factory->createInput(array(
+        $this->add(array(
             'name'       => 'subject',
             'required'   => true,
             'filters'    => array(
@@ -52,19 +40,11 @@ class ContactFilter extends InputFilter
                     ),
                 ),
             ),
-        )));
+        ));
 
-        $this->add($factory->createInput(array(
+        $this->add(array(
             'name'       => 'body',
             'required'   => true,
-        )));
-
-        /*
-         * Omitting until we have a CSRF validator
-        $this->add($factory->createInput(array(
-            'name'       => 'csrf',
-            'required'   => true,
-        )));
-         */
+        ));
     }
 }

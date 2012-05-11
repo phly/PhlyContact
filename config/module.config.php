@@ -44,15 +44,6 @@ $config = array('di' => array(
                 ),
             ),
         ),
-        'PhlyContact\Form\ContactFilter' => array(
-            '__construct' => array(
-                'required' => true,
-                'captchaAdapter' => array(
-                    'required' => true,
-                    'type'     => 'Zend\Captcha\AdapterInterface',
-                ),
-            ),
-        ),
         // The following is provided in order to simplify configuration of a
         // ReCaptcha adapter.
         'Zend\Captcha\ReCaptcha' => array(
