@@ -13,8 +13,10 @@ return array(
         // This is simply configuration to pass to Zend\Captcha\Factory
         'captcha' => array(
             'class'   => 'recaptcha',
-            'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
-            'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
+            'options' => array(
+                'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
+                'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
+            ),
         ),
 
         // This sets the default "to" and "sender" headers for your message

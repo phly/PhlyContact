@@ -2,18 +2,23 @@
 
 namespace PhlyContact\Service;
 
+use Traversable;
 use Zend\Mail\Transport;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\ArrayUtils;
 
 class ContactMailTransportFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
         $config  = $services->get('config');
-        $config  = $config->phly_contact->mail_transport;
-        $class   = $config->class;
-        $options = $config->options;
+        if ($config instanceof Traversable) {
+            $config = ArrayUtils::iteratorToArray($config);
+        }
+        $config  = $config['phly_contact']['mail_transport'];
+        $class   = $config['class'];
+        $options = $config['options'];
 
         switch ($class) {
             case 'Zend\Mail\Transport\Sendmail':

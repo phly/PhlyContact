@@ -77,11 +77,11 @@ return array(
     ),
     'view_manager' => array(
         'template_map' => array(
-            'contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',
-            'contact/thank-you' => __DIR__ . '/../view/phly-contact/contact/thank-you.phtml',
+            'phly-contact/contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',
+            'phly-contact/contact/thank-you' => __DIR__ . '/../view/phly-contact/contact/thank-you.phtml',
         ),
         'template_path_stack' => array(
-            'contact' => __DIR__ . '/../view/phly-contact',
+            'phly-contact' => __DIR__ . '/../view',
         ),
     ),
 );
