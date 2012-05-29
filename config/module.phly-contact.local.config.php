@@ -8,33 +8,40 @@
  * ReCaptcha CAPTCHA adapter, and setting the to and sender addresses for the
  * mail message.
  */
-return array('di' => array(
-    'instance' => array(
-        'preferences' => array(
-            'Zend\Mail\Transport'  => 'Zend\Mail\Transport\Smtp',
-            'Zend\Captcha\Adapter' => 'Zend\Captcha\ReCaptcha',
-        ),
-
-        'Zend\Mail\Message' => array('parameters' => array(
-            'Zend\Mail\Message::addTo:emailOrAddressList'     => 'contact@your.tld',
-            'Zend\Mail\Message::setSender:emailOrAddressList' => 'contact@your.tld',
-        )),
-
-        // This is how to configure using GMail as your SMTP server
-        'Zend\Mail\Transport\SmtpOptions' => array('parameters' => array(
-            'host'             => 'smtp.gmail.com',
-            'port'             => 587,
-            'connectionClass'  => 'login',
-            'connectionConfig' => array(
-                'ssl'      => 'tls',
-                'username' => 'contact@your.tld',
-                'password' => 'password',
-            ),
-        )),
-
-        'Zend\Captcha\ReCaptcha' => array('parameters' => array(
+return array(
+    'phly_contact' => array(
+        // This is simply configuration to pass to Zend\Captcha\Factory
+        'captcha' => array(
+            'class'   => 'recaptcha',
             'pubkey'  => 'RECAPTCHA_PUBKEY_HERE',
             'privkey' => 'RECAPTCHA_PRIVKEY_HERE',
-        )),
+        ),
+
+        // This sets the default "to" and "sender" headers for your message
+        'message' => array(
+            // These can be either a string, or an array of email => name pairs
+            'to'     => 'contact@your.tld',
+            'sender' => 'contact@your.tld',
+        ),
+
+        // Transport consists of two keys: 
+        // - "class", the mail tranport class to use, and
+        // - "options", any options to use to configure the 
+        //   tranpsort. Usually these will be passed to the 
+        //   transport-specific options class
+        // This example configures GMail as your SMTP server
+        'mail_transport' => array(
+            'class'   => 'Zend\Mail\Transport\Smtp',
+            'options' => array(
+                'host'             => 'smtp.gmail.com',
+                'port'             => 587,
+                'connectionClass'  => 'login',
+                'connectionConfig' => array(
+                    'ssl'      => 'tls',
+                    'username' => 'contact@your.tld',
+                    'password' => 'password',
+                ),
+            ),
+        ),
     ),
-));
+);

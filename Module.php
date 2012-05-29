@@ -2,26 +2,8 @@
 
 namespace PhlyContact;
 
-use Zend\Form\View\HelperLoader as FormHelperLoader;
-use Zend\Module\Consumer\AutoloaderProvider;
-
-class Module implements AutoloaderProvider
+class Module
 {
-    public function init($manager)
-    {
-        $events = $manager->events();
-        if (method_exists($events, 'getStaticConnections')) {
-            $shared = $events->getStaticConnections();
-        } elseif (method_exists($events, 'getSharedCollections')) {
-            $shared = $events->getSharedCollections();
-        } elseif (method_exists($events, 'getSharedManager')) {
-            $shared = $events->getSharedManager();
-        } else {
-            return;
-        }
-
-        $shared->attach('bootstrap', 'bootstrap', array($this, 'onBootstrap'));
-    }
     public function getAutoloaderConfig()
     {
         return array(
@@ -39,25 +21,5 @@ class Module implements AutoloaderProvider
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
-    }
-
-    public function onBootstrap($e)
-    {
-        $app     = $e->getParam('application');
-        $locator = $app->getLocator();
-        $this->helperLoader = $locator->get('Zend\View\HelperLoader');
-
-        $app->events()->attach('route', array($this, 'onRouteFinish'), -100);
-    }
-
-    public function onRouteFinish($e)
-    {
-        $matches    = $e->getRouteMatch();
-        $controller = $matches->getParam('controller');
-        $namespace  = substr($controller, 0, strpos($controller, '\\'));
-        if ($namespace !== __NAMESPACE__) {
-            return;
-        }
-        $this->helperLoader->registerPlugins(new FormHelperLoader());
     }
 }

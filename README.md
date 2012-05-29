@@ -7,14 +7,17 @@ Requirements
 ----
 
 * PHP >= 5.3.3
-* Zend Framework 2, specifically:
+* Zend Framework 2, beta4 or later, specifically:
     * Zend\Captcha (used for CAPTCHA functionality on the forms)
-    * Zend\Form (the contact form itself; currently supports beta3 or earlier)
+    * Zend\InputFilter (used for validating the contact form); in turn, uses:
+        * Zend\Filter
+        * Zend\Uri
+        * Zend\Validator
+    * Zend\Form (the contact form itself; currently supports beta4 or later)
     * Zend\Mail (for sending the contact emails)
-    * Zend\Module (implements a ZF2 module)
+    * Zend\ModuleManager (implements a ZF2 module)
     * Zend\Mvc (provides a controller)
-    * Zend\Validator (uses the Hostname validator in the contact form when
-      validating email addresses)
+    * Zend\ServiceManager (provides service factories)
     * Zend\View (provides view scripts for the PhpRenderer, and utilizes
       ViewModels in the controller)
 
