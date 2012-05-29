@@ -40,7 +40,7 @@ You will need to configure the following:
 Sample configuration for use in your application autoload configuration is
 provided, demonstrating usage of the ReCaptcha CAPTCHA adapter, the SMTP mail
 transport, and setting mail message defaults. This is in
-`config\module.phly-contact.local.config.php`.
+`config\module.phly-contact.local.php`.
 
 License
 ----
