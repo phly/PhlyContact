@@ -1,0 +1,36 @@
+{
+    "name": "phly/phly-contact",
+    "description": "ZF2 Module implementing contact form functionality",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "zend",
+        "module"
+    ],
+    "homepage": "https://github.com/weierophinney/PhlyContact",
+    "authors": [
+        {
+            "name": "Matthew Weier O'Phinney",
+            "email": "matthew@weierophinney.net",
+            "homepage": "http://mwop.net/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master",
+    },
+    "autoload": {
+        "psr-0": {
+            "PhlyContact": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}
