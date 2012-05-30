@@ -21,6 +21,7 @@ class ContactFormFactory implements FactoryInterface
         $captcha = $services->get('PhlyContactCaptcha');
         $filter  = new ContactFilter();
         $form    = new ContactForm($name, $captcha);
+        $form->setInputFilter($filter);
         return $form;
     }
 }

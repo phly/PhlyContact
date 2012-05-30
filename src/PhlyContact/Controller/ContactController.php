@@ -45,7 +45,7 @@ class ContactController extends ActionController
                 'error' => true,
                 'form'  => $form,
             ));
-            $model->setTemplate('contact/index');
+            $model->setTemplate('phly-contact/contact/index');
             return $model;
         }
 

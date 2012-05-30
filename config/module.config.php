@@ -13,6 +13,7 @@ return array(
             )
         ),
         'message' => array(
+            /*
             'to' => array(
                 'EMAIL HERE' => 'NAME HERE',
             ),
@@ -20,7 +21,6 @@ return array(
                 'address' => 'EMAIL HERE',
                 'name'    => 'NAME HERE',
             ),
-            /*
             'from' => array(
                 'EMAIL HERE' => 'NAME HERE',
             ),

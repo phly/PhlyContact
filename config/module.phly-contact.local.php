@@ -21,9 +21,16 @@ return array(
 
         // This sets the default "to" and "sender" headers for your message
         'message' => array(
+            /*
             // These can be either a string, or an array of email => name pairs
             'to'     => 'contact@your.tld',
-            'sender' => 'contact@your.tld',
+            'from'   => 'contact@your.tld',
+            // This should be an array with minimally an "address" element, and 
+            // can also contain a "name" element
+            'sender' => array(
+                'address' => 'contact@your.tld'
+            ),
+             */
         ),
 
         // Transport consists of two keys: 
