@@ -27,9 +27,9 @@ return array(
              */
         ),
     ),
-    'controller' => array(
+    'controllers' => array(
         'factories' => array(
-            'PhlyContact\Controller\ContactController' => 'PhlyContact\Service\ContactControllerFactory',
+            'PhlyContact\Controller\Contact' => 'PhlyContact\Service\ContactControllerFactory',
         ),
     ),
     'router' => array(
@@ -39,8 +39,9 @@ return array(
                 'options' => array(
                     'route' => '/contact',
                     'defaults' => array(
-                        'controller' => 'PhlyContact\Controller\ContactController',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'PhlyContact\Controller',
+                        'controller'    => 'Contact',
+                        'action'        => 'index',
                     ),
                 ),
                 'may_terminate' => true,

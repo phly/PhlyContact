@@ -30,40 +30,40 @@ class ContactForm extends Form
         
         $this->add(array(
             'name' => 'from',
-            'attributes' => array(
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
                 'label' => 'From:',
-                'type'  => 'text',
             ),
         ));
 
         $this->add(array(
             'name'  => 'subject',
-            'attributes' => array(
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
                 'label' => 'Subject:',
-                'type'  => 'text',
             ),
         ));
 
 
         $this->add(array(
             'name'  => 'body',
-            'attributes' => array(
+            'type'  => 'Zend\Form\Element\Textarea',
+            'options' => array(
                 'label' => 'Your message:',
-                'type'  => 'textarea',
             ),
         ));
 
         $captcha = new Element\Captcha('captcha');
         $captcha->setCaptcha($this->captchaAdapter);
-        $captcha->setAttribute('label', 'Please verify you are human.');
+        $captcha->setOptions(array('label' => 'Please verify you are human.'));
         $this->add($captcha);
 
         $this->add(new Element\Csrf('csrf'));
 
         $this->add(array(
             'name' => 'Send',
+            'type'  => 'Zend\Form\Element\Submit',
             'attributes' => array(
-                'type'  => 'submit',
                 'value' => 'Send',
             ),
         ));

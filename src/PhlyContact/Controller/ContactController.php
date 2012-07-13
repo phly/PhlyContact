@@ -2,13 +2,13 @@
 
 namespace PhlyContact\Controller;
 
-use PhlyContact\Form\ContactForm,
-    Zend\Mail\Transport,
-    Zend\Mail\Message as Message,
-    Zend\Mvc\Controller\ActionController,
-    Zend\View\Model\ViewModel;
+use PhlyContact\Form\ContactForm;
+use Zend\Mail\Transport;
+use Zend\Mail\Message as Message;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
-class ContactController extends ActionController
+class ContactController extends AbstractActionController
 {
     protected $form;
     protected $message;
@@ -37,7 +37,7 @@ class ContactController extends ActionController
             return $this->redirect()->toRoute('contact');
         }
 
-        $post = $this->request->post();
+        $post = $this->request->getPost();
         $form = $this->form;
         $form->setData($post);
         if (!$form->isValid()) {
@@ -57,7 +57,7 @@ class ContactController extends ActionController
 
     public function thankYouAction()
     {
-        $headers = $this->request->headers();
+        $headers = $this->request->getHeaders();
         if (!$headers->has('Referer')
             || !preg_match('#/contact$#', $headers->get('Referer')->getFieldValue())
         ) {
