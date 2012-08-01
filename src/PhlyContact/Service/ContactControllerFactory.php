@@ -11,9 +11,10 @@ class ContactControllerFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
-        $form      = $services->get('PhlyContactForm');
-        $message   = $services->get('PhlyContactMailMessage');
-        $transport = $services->get('PhlyContactMailTransport');
+        $serviceLocator = $services->getServiceLocator();
+        $form           = $serviceLocator->get('PhlyContactForm');
+        $message        = $serviceLocator->get('PhlyContactMailMessage');
+        $transport      = $serviceLocator->get('PhlyContactMailTransport');
 
         $controller = new ContactController();
         $controller->setContactForm($form);
