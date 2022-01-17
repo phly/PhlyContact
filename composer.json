@@ -1,13 +1,13 @@
 {
     "name": "phly/phly-contact",
-    "description": "ZF2 Module implementing contact form functionality",
+    "description": "Laminas Module implementing contact form functionality",
     "type": "library",
     "keywords": [
         "zf2",
         "zend",
         "module"
     ],
-    "homepage": "https://github.com/weierophinney/PhlyContact",
+    "homepage": "https://github.com/phly/PhlyContact",
     "authors": [
         {
             "name": "Matthew Weier O'Phinney",
@@ -17,14 +17,60 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*"
+        "laminas/laminas-dependency-plugin": "^2.1",
+        "laminas/laminas-authentication": "^2.5",
+        "laminas/laminas-barcode": "^2.5",
+        "laminas/laminas-cache": "^2.5",
+        "laminas/laminas-captcha": "^2.5",
+        "laminas/laminas-code": "^2.5",
+        "laminas/laminas-config": "^2.5",
+        "laminas/laminas-console": "^2.5",
+        "laminas/laminas-crypt": "^2.5",
+        "laminas/laminas-db": "^2.5",
+        "zendframework/zend-debug": "^2.5",
+        "laminas/laminas-di": "^2.5",
+        "laminas/laminas-dom": "^2.5",
+        "laminas/laminas-escaper": "^2.5",
+        "laminas/laminas-eventmanager": "^2.5",
+        "laminas/laminas-feed": "^2.5",
+        "laminas/laminas-file": "^2.5",
+        "laminas/laminas-filter": "^2.5",
+        "laminas/laminas-form": "^2.5",
+        "laminas/laminas-http": "^2.5",
+        "laminas/laminas-i18n": "^2.5",
+        "laminas/laminas-i18n-resources": "^2.5",
+        "laminas/laminas-inputfilter": "^2.5",
+        "laminas/laminas-loader": "^2.5",
+        "laminas/laminas-log": "^2.5",
+        "laminas/laminas-mail": "^2.5",
+        "laminas/laminas-math": "^2.5",
+        "laminas/laminas-memory": "^2.5",
+        "laminas/laminas-mime": "^2.5",
+        "laminas/laminas-modulemanager": "^2.5",
+        "laminas/laminas-mvc": "^2.5",
+        "laminas/laminas-navigation": "^2.5",
+        "laminas/laminas-paginator": "^2.5",
+        "laminas/laminas-permissions-acl": "^2.5",
+        "laminas/laminas-permissions-rbac": "^2.5",
+        "laminas/laminas-progressbar": "^2.5",
+        "laminas/laminas-serializer": "^2.5",
+        "laminas/laminas-server": "^2.5",
+        "laminas/laminas-servicemanager": "^2.5",
+        "laminas/laminas-session": "^2.5",
+        "laminas/laminas-soap": "^2.5",
+        "laminas/laminas-tag": "^2.5",
+        "laminas/laminas-test": "^2.5",
+        "laminas/laminas-text": "^2.5",
+        "laminas/laminas-uri": "^2.5",
+        "laminas/laminas-validator": "^2.5",
+        "zendframework/zend-version": "^2.5",
+        "laminas/laminas-view": "^2.5",
+        "laminas/laminas-xmlrpc": "^2.5",
+        "zendframework/zendxml": "^1.0.1"
     },
     "autoload": {
-        "psr-0": {
-            "PhlyContact": "src/"
-        },
-        "classmap": [
-            "./"
-        ]
+        "psr-4": {
+            "PhlyContact\\": "src/"
+        }
     }
 }

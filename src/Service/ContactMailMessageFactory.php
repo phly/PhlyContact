@@ -2,21 +2,21 @@
 
 namespace PhlyContact\Service;
 
+use Interop\Container\ContainerInterface;
+use Laminas\Mail\Message;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Mail\Message;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
 
 class ContactMailMessageFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $services)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
-        $config  = $services->get('config');
+        $config = $container->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-        $config  = $config['phly_contact']['message'];
+        $config = $config['phly_contact']['message'];
 
         $message = new Message();
 
@@ -30,10 +30,11 @@ class ContactMailMessageFactory implements FactoryInterface
 
         if (isset($config['sender']) && isset($config['sender']['address'])) {
             $address = $config['sender']['address'];
-            $name    = isset($config['sender']['name']) ? $config['sender']['name'] : null;
+            $name = isset($config['sender']['name']) ? $config['sender']['name'] : null;
             $message->setSender($address, $name);
         }
 
         return $message;
     }
+
 }
