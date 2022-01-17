@@ -3,10 +3,10 @@
 namespace PhlyContact\Controller;
 
 use PhlyContact\Form\ContactForm;
-use Zend\Mail\Transport;
-use Zend\Mail\Message as Message;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Mail\Transport;
+use Laminas\Mail\Message as Message;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 
 class ContactController extends AbstractActionController
 {
@@ -26,25 +26,25 @@ class ContactController extends AbstractActionController
 
     public function indexAction()
     {
-        return array(
+        return [
             'form' => $this->form,
-        );
+        ];
     }
 
     public function processAction()
     {
-        if (!$this->request->isPost()) {
+        if (! $this->request->isPost()) {
             return $this->redirect()->toRoute('contact');
         }
 
         $post = $this->request->getPost();
         $form = $this->form;
         $form->setData($post);
-        if (!$form->isValid()) {
-            $model = new ViewModel(array(
+        if (! $form->isValid()) {
+            $model = new ViewModel([
                 'error' => true,
                 'form'  => $form,
-            ));
+            ]);
             $model->setTemplate('phly-contact/contact/index');
             return $model;
         }
@@ -58,13 +58,14 @@ class ContactController extends AbstractActionController
     public function thankYouAction()
     {
         $headers = $this->request->getHeaders();
-        if (!$headers->has('Referer')
-            || !preg_match('#/contact$#', $headers->get('Referer')->getFieldValue())
+        if (
+            ! $headers->has('Referer')
+            || ! preg_match('#/contact$#', $headers->get('Referer')->getFieldValue())
         ) {
             return $this->redirect()->toRoute('contact');
         }
 
-        return array();
+        return [];
     }
 
     public function setContactForm(ContactForm $form)

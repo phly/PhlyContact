@@ -1,50 +1,51 @@
 <?php
+
 namespace PhlyContact\Form;
 
-use Zend\InputFilter\InputFilter;
-use Zend\Validator\Hostname as HostnameValidator;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Validator\Hostname as HostnameValidator;
 
 class ContactFilter extends InputFilter
 {
     public function __construct()
     {
-        $this->add(array(
+        $this->add([
             'name'       => 'from',
             'required'   => true,
-            'validators' => array(
-                array(
+            'validators' => [
+                [
                     'name'    => 'EmailAddress',
-                    'options' => array(
+                    'options' => [
                         'allow'  => HostnameValidator::ALLOW_DNS,
                         'domain' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'subject',
             'required'   => true,
-            'filters'    => array(
-                array(
+            'filters'    => [
+                [
                     'name'    => 'StripTags',
-                ),
-            ),
-            'validators' => array(
-                array(
+                ],
+            ],
+            'validators' => [
+                [
                     'name'    => 'StringLength',
-                    'options' => array(
+                    'options' => [
                         'encoding' => 'UTF-8',
                         'min'      => 2,
                         'max'      => 140,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'       => 'body',
             'required'   => true,
-        ));
+        ]);
     }
 }

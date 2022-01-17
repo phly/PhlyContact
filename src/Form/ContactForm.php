@@ -1,9 +1,10 @@
 <?php
+
 namespace PhlyContact\Form;
 
-use Zend\Captcha\AdapterInterface as CaptchaAdapter;
-use Zend\Form\Element;
-use Zend\Form\Form;
+use Laminas\Captcha\AdapterInterface as CaptchaAdapter;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
 
 class ContactForm extends Form
 {
@@ -27,45 +28,45 @@ class ContactForm extends Form
         if (null === $name) {
             $this->setName('contact');
         }
-        
-        $this->add(array(
+
+        $this->add([
             'name' => 'from',
-            'type' => 'Zend\Form\Element\Text',
-            'options' => array(
+            'type' => 'Laminas\Form\Element\Text',
+            'options' => [
                 'label' => 'From:',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name'  => 'subject',
-            'type' => 'Zend\Form\Element\Text',
-            'options' => array(
+            'type' => 'Laminas\Form\Element\Text',
+            'options' => [
                 'label' => 'Subject:',
-            ),
-        ));
+            ],
+        ]);
 
 
-        $this->add(array(
+        $this->add([
             'name'  => 'body',
-            'type'  => 'Zend\Form\Element\Textarea',
-            'options' => array(
+            'type'  => 'Laminas\Form\Element\Textarea',
+            'options' => [
                 'label' => 'Your message:',
-            ),
-        ));
+            ],
+        ]);
 
         $captcha = new Element\Captcha('captcha');
         $captcha->setCaptcha($this->captchaAdapter);
-        $captcha->setOptions(array('label' => 'Please verify you are human.'));
+        $captcha->setOptions(['label' => 'Please verify you are human.']);
         $this->add($captcha);
 
         $this->add(new Element\Csrf('csrf'));
 
-        $this->add(array(
+        $this->add([
             'name' => 'Send',
-            'type'  => 'Zend\Form\Element\Submit',
-            'attributes' => array(
+            'type'  => 'Laminas\Form\Element\Submit',
+            'attributes' => [
                 'value' => 'Send',
-            ),
-        ));
+            ],
+        ]);
     }
 }

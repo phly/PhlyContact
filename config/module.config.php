@@ -1,18 +1,22 @@
 <?php
-return array(
-    'phly_contact' => array(
-        'captcha' => array(
+
+use PhlyContact\Controller\ContactController;
+use PhlyContact\Service\ContactControllerFactory;
+
+return [
+    'phly_contact' => [
+        'captcha' => [
             'class' => 'dumb',
-        ),
-        'form' => array(
+        ],
+        'form' => [
             'name' => 'contact',
-        ),
-        'mail_transport' => array(
-            'class' => 'Zend\Mail\Transport\Sendmail',
-            'options' => array(
-            )
-        ),
-        'message' => array(
+        ],
+        'mail_transport' => [
+            'class' => 'Laminas\Mail\Transport\Sendmail',
+            'options' => [
+            ]
+        ],
+        'message' => [
             /*
             'to' => array(
                 'EMAIL HERE' => 'NAME HERE',
@@ -25,64 +29,63 @@ return array(
                 'EMAIL HERE' => 'NAME HERE',
             ),
              */
-        ),
-    ),
-    'controllers' => array(
-        'factories' => array(
-            'PhlyContact\Controller\Contact' => 'PhlyContact\Service\ContactControllerFactory',
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'contact' => array(
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            ContactController::class => ContactControllerFactory::class,
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'contact' => [
                 'type' => 'Literal',
-                'options' => array(
+                'options' => [
                     'route' => '/contact',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'PhlyContact\Controller',
-                        'controller'    => 'Contact',
+                    'defaults' => [
+                        'controller'    => ContactController::class,
                         'action'        => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'process' => array(
+                'child_routes' => [
+                    'process' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/process',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'process',
-                            ),
-                        ),
-                    ),
-                    'thank-you' => array(
+                            ],
+                        ],
+                    ],
+                    'thank-you' => [
                         'type' => 'Literal',
-                        'options' => array(
+                        'options' => [
                             'route' => '/thank-you',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action' => 'thank-you',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'service_manager' => array(
-        'factories' => array(
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
             'PhlyContactCaptcha'       => 'PhlyContact\Service\ContactCaptchaFactory',
             'PhlyContactForm'          => 'PhlyContact\Service\ContactFormFactory',
             'PhlyContactMailMessage'   => 'PhlyContact\Service\ContactMailMessageFactory',
             'PhlyContactMailTransport' => 'PhlyContact\Service\ContactMailTransportFactory',
-        ),
-    ),
-    'view_manager' => array(
-        'template_map' => array(
+        ],
+    ],
+    'view_manager' => [
+        'template_map' => [
             'phly-contact/contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',
             'phly-contact/contact/thank-you' => __DIR__ . '/../view/phly-contact/contact/thank-you.phtml',
-        ),
-        'template_path_stack' => array(
+        ],
+        'template_path_stack' => [
             'phly-contact' => __DIR__ . '/../view',
-        ),
-    ),
-);
+        ],
+    ],
+];

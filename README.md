@@ -1,24 +1,24 @@
 PhlyContact
 ====
 
-This is a simple ZF2 module implementing a contact form.
+This is a simple Laminas module implementing a contact form.
 
 Requirements
 ----
 
 * PHP >= 5.3.3
 * Zend Framework 2, beta4 or later, specifically:
-    * Zend\Captcha (used for CAPTCHA functionality on the forms)
-    * Zend\InputFilter (used for validating the contact form); in turn, uses:
-        * Zend\Filter
-        * Zend\Uri
-        * Zend\Validator
-    * Zend\Form (the contact form itself; currently supports beta4 or later)
-    * Zend\Mail (for sending the contact emails)
-    * Zend\ModuleManager (implements a ZF2 module)
-    * Zend\Mvc (provides a controller)
-    * Zend\ServiceManager (provides service factories)
-    * Zend\View (provides view scripts for the PhpRenderer, and utilizes
+    * Laminas\Captcha (used for CAPTCHA functionality on the forms)
+    * Laminas\InputFilter (used for validating the contact form); in turn, uses:
+        * Laminas\Filter
+        * Laminas\Uri
+        * Laminas\Validator
+    * Laminas\Form (the contact form itself; currently supports beta4 or later)
+    * Laminas\Mail (for sending the contact emails)
+    * Laminas\ModuleManager (implements a Laminas module)
+    * Laminas\Mvc (provides a controller)
+    * Laminas\ServiceManager (provides service factories)
+    * Laminas\View (provides view scripts for the PhpRenderer, and utilizes
       ViewModels in the controller)
 
 Installation
