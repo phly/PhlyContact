@@ -1,6 +1,10 @@
 PhlyContact
 ====
 
+> :warning: **Archived 2025-08-17**
+> 
+> Use at your own risk.
+
 This is a simple ZF2 module implementing a contact form.
 
 Requirements
